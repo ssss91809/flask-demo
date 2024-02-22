@@ -45,7 +45,10 @@ def get_books():
     }
 
     for id in books:
-        print(books[id])
+        print(
+            f'{id}:名稱:{books[id]["name"]}\
+               價格:{books[id]["price"]} 圖片:{books[id]["image_url"]}'
+        )
 
     return render_template("books.html", books=books)
 

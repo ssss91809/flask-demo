@@ -4,12 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>書籍首頁</title>
+    <style>
+        body {
+            background-color: blanchedalmond;
+            text-align: center;
+        }
+
+        .title {
+            color: cadetblue;
+            background-color: burlywood;
+        }
+
+        .price {
+            color: brown;
+            border-radius: 6px%;
+
+        }
+    </style>
 </head>
 
 <body>
     <h1>書籍列表</h1>
-    {{books}}
+    {% for id in books%}
+    <h2 class="title">{{books[id]["name"]}}</h2>
+    <p class="price">價格:{{books[id]["price"]}}</p>
+    <img src="{{books[id]['image_url']}}" alt="">
+    <hr>
+
+
+
+    {% endfor %}
+    <!-- {{books}} -->
 </body>
 
 </html>

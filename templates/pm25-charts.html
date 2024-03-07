@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+</head>
+
+<body>
+    <h1>PM2.5全省數據圖庫</h1>
+    <div id="main" style="width: 1000px;height:1000px;"></div>
+
+
+
+    <script type="text/javascript">
+        const myChart = echarts.init(document.getElementById('main'));
+        drawPM25();
+        function drawPM25() {
+            $.ajax(
+                {
+                    url: "/pm25-data",
+                    type: "GET",
+                    dataType: "json",
+                    success: (result) => {
+                        console.log(result);
+                        drawChat(myChart, result["datetime"], "PM2.5", result["site"], result["pm25"])
+                    }
+                }
+            )
+        }
+
+        function drawChat(chart, title, legend, xData, yData) {
+
+            // 基于准备好的dom，初始化echarts实例
+
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: title
+                },
+                tooltip: {},
+                legend: {
+                    data: [legend]
+                },
+                xAxis: {
+                    data: xData
+                },
+                yAxis: {},
+                series: [
+                    {
+                        name: legend,
+                        type: 'pie',
+                        data: yData
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            chart.setOption(option);
+        }
+
+    </script>
+    <!-- <script>
+        const titleE1 = document.querySelector("h1");
+        titleE1.innerText = "Test!";
+        titleE1.innerText = "<u>Test!</u>";
+        titleE1.addEventListener("click", () => {
+            alert("test1!");
+        })
+
+
+        $("h1").text("123");
+        $("h1").html("<u>123</u>");
+        $("h1").css("color", "blue");
+        $("h1").click(() => {
+            alert("test2!");
+        }
+        )
+    </script> -->
+</body>
+
+</html>

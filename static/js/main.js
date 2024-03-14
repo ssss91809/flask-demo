@@ -16,6 +16,13 @@ $("#select_county").change(() => {
     drawCountyPM25(county);
 });
 
+window.onresize = function () {
+    chart1.resize();
+    chart2.resize();
+    chart3.resize();
+};
+
+
 // 呼叫後端資料跟繪製
 drawPM25();
 
@@ -29,7 +36,7 @@ function drawCountyPM25(county) {
             success: (result) => {
 
 
-                drawChat(chart3, county, "PM2.5", result["site"], result["pm25"]);
+                drawChat(chart3, county, "PM2.5", result["site"], result["pm25"], "#007F73");
                 chart3.hideLoading();
             },
             error: () => {
@@ -52,7 +59,7 @@ function drawSixPM25() {
             success: (result) => {
 
 
-                drawChat(chart2, "六都PM2.5平均值", "PM2.5", result["site"], result["pm25"]);
+                drawChat(chart2, "六都PM2.5平均值", "PM2.5", result["site"], result["pm25"], "#4CCD99");
                 chart2.hideLoading();
             },
             error: () => {
@@ -109,7 +116,7 @@ function drawPM25() {
     )
 }
 
-function drawChat(chart, title, legend, xData, yData) {
+function drawChat(chart, title, legend, xData, yData, color = '#FFC700') {
 
     // 基于准备好的dom，初始化echarts实例
 
@@ -131,7 +138,10 @@ function drawChat(chart, title, legend, xData, yData) {
             {
                 name: legend,
                 type: 'bar',
-                data: yData
+                data: yData,
+                itemStyle: {
+                    color: color
+                }
             }
         ]
     };
